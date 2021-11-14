@@ -1,0 +1,43 @@
+.header__global {
+  .header__up {
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #c00952;
+    color: #ffffff;
+    height: 110px;
+
+    .header__up-left {
+      height: 106px;
+      display: flex;
+      align-items: center;
+      justify-content: start;
+
+      @media (max-width: 1080px) {
+        height: auto;
+        text-align: center;
+        justify-content: center;
+      }
+    }
+
+    .header__up-right {
+      height: 106px;
+      display: flex;
+      align-items: center;
+      justify-content: end;
+
+      @media (max-width: 1080px) {
+        height: auto;
+        text-align: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  .header__bottom {
+    width: 100%;
+
+    background-color: #f08cb4;
+    color: #ffffff;
+  }
+}

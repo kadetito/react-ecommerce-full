@@ -1,0 +1,19 @@
+.formulario__global {
+  .formulario__input-container {
+    height: 100px;
+
+    .error-input {
+      color: red;
+      font-size: 12px;
+    }
+  }
+
+  div {
+    input {
+    }
+  }
+
+  .btn-secondary {
+    min-width: 100px;
+  }
+}
