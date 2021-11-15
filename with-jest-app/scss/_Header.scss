@@ -1,12 +1,26 @@
 .header__global {
   .header__up {
     width: 100%;
+
     padding-left: 30px;
     padding-right: 30px;
     background-color: #c00952;
     color: #ffffff;
     height: 110px;
 
+    .dropdown-menu {
+      z-index: 9999 !important;
+    }
+
+    .dropdown-toggle::after {
+      display: none;
+    }
+    .nav-link {
+      color: #ffffff;
+    }
+    .nav-link:hover {
+      color: #000;
+    }
     .header__up-left {
       height: 106px;
       display: flex;
@@ -39,5 +53,20 @@
 
     background-color: #f08cb4;
     color: #ffffff;
+  }
+
+  .center-nav {
+    margin-top: 8px;
+
+    a.links {
+      cursor: pointer;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    a.links:hover {
+      color: #000;
+      text-decoration: none;
+    }
   }
 }

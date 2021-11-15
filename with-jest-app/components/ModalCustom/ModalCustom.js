@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 export default function ModalCustom(props) {
   const { show, setShow, title, children, ...rest } = props;
@@ -27,3 +28,10 @@ export default function ModalCustom(props) {
     </Modal>
   );
 }
+
+ModalCustom.propTypes = {
+  show: PropTypes.bool.isRequired,
+  setShow: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.object,
+};

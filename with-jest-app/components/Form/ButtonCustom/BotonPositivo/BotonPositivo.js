@@ -1,5 +1,6 @@
 import React from "react";
 import { Spinner } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 export default function BotonPositivo(props) {
   const { type, textButton, onClick, loading } = props;
@@ -24,3 +25,9 @@ export default function BotonPositivo(props) {
     </>
   );
 }
+BotonPositivo.propTypes = {
+  textButton: PropTypes.string,
+
+  onClick: PropTypes.func,
+  loading: PropTypes.bool,
+};

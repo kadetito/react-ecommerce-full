@@ -5,12 +5,15 @@ import InputCustom from "@/components/Form/InputCustom";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { loginUsuarioAPI } from "Services/UserService";
+import { loginUsuarioAPI, resetPasswordAPI } from "Services/UserService";
 import Swal from "sweetalert2";
+import useAuth from "hooks/useAuth";
 
 export default function LoginForm(props) {
   const { showRegisterForm, onCloseModal } = props;
   const [loading, setLoading] = useState(false);
+
+  const { login } = useAuth();
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -19,6 +22,7 @@ export default function LoginForm(props) {
       setLoading(true);
       const response = await loginUsuarioAPI(formData);
       if (response?.ok) {
+        login(response.token);
         Swal.fire({
           text: "Acceso permitido",
           icon: "success",
@@ -36,6 +40,16 @@ export default function LoginForm(props) {
       setLoading(false);
     },
   });
+
+  const resetPasswrod = () => {
+    formik.setErrors({});
+    const validateEmail = Yup.string().email().required();
+    if (!validateEmail.isValidSync(formik.values.email)) {
+      formik.setErrors({ email: true });
+    } else {
+      resetPasswordAPI(formik.values.email); //TODO IN BACKEND
+    }
+  };
 
   return (
     <Container fluid="sm">
@@ -85,7 +99,7 @@ export default function LoginForm(props) {
             </div>
             <div className="mt-3 d-flex justify-content-center">
               <div>
-                <button type="button" className="btn">
+                <button onClick={resetPasswrod} type="button" className="btn">
                   ¿Has olvidado la contraseña?
                 </button>
               </div>

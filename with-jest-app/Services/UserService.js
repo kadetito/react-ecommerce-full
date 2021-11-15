@@ -1,4 +1,7 @@
 import { createContext } from "react";
+import { authFetch } from "utils/Fetch";
+import { getToken } from "Services/TokenService";
+import jwtDecode from "jwt-decode";
 
 const vari = createContext(process.env.NEXT_PUBLIC_URL_PATH);
 const BASE_PATH = vari._currentValue;
@@ -42,5 +45,29 @@ export async function loginUsuarioAPI(formData) {
   } catch (error) {
     console.error("ERROR", error);
     return;
+  }
+}
+
+export async function resetPasswordAPI(email) {
+  try {
+    //TODO enviar email para cambiar contraseña en el servidor
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getMeAPI(logout) {
+  try {
+    const toke = getToken();
+    if (toke) {
+      const uid = jwtDecode(toke).uid;
+      const url = `${BASE_PATH}/api/usuarios/${uid}`;
+      const result = await authFetch(url, null, logout);
+      return result ? result : null;
+    } else {
+      return;
+    }
+  } catch (error) {
+    return null;
   }
 }

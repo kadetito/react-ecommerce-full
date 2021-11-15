@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import PropTypes from "prop-types";
 
 export default function Auth(props) {
   const { onCloseModal, setTitleModal } = props;
@@ -23,3 +24,8 @@ export default function Auth(props) {
     <RegisterForm showLoginForm={showLoginForm} />
   );
 }
+
+Auth.propTypes = {
+  onCloseModal: PropTypes.func,
+  setTitleModal: PropTypes.func,
+};

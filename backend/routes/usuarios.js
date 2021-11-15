@@ -7,6 +7,7 @@ const { validarCampos } = require("../middlewares/validar-campos");
 
 const {
   getUsuarios,
+  getUserByID,
   crearUsuario,
   actualizarUsuario,
   borrarUsuario,
@@ -26,6 +27,16 @@ router.post(
     validarCampos,
   ],
   crearUsuario
+);
+
+router.get(
+  "/:id",
+  [
+    validarJWT,
+    check("id", "El id es obligatorio").not().isEmpty(),
+    validarCampos,
+  ],
+  getUserByID
 );
 
 router.put(

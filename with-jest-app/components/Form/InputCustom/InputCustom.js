@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-
+import PropTypes from "prop-types";
 export default function InputCustom(props) {
   const { labelText, type, value, name, id, onChange, error } = props;
 
@@ -28,3 +28,11 @@ export default function InputCustom(props) {
     </div>
   );
 }
+InputCustom.propTypes = {
+  labelText: PropTypes.string,
+  type: PropTypes.string,
+  onChange: PropTypes.func,
+  name: PropTypes.string,
+  id: PropTypes.string,
+  error: PropTypes.object,
+};

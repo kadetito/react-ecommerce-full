@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default function BotonSearch(props) {
   const { labelText, type, name, id, onClick } = props;
@@ -17,3 +18,11 @@ export default function BotonSearch(props) {
     </div>
   );
 }
+
+BotonSearch.propTypes = {
+  labelText: PropTypes.string,
+
+  onClick: PropTypes.func,
+  name: PropTypes.string,
+  id: PropTypes.string,
+};
