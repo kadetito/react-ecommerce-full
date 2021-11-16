@@ -1,4 +1,3 @@
-import Image from "next/image";
 import BasicLayout from "../layouts/BasicLayout";
 export default function Home() {
   return (

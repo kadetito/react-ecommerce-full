@@ -66,17 +66,17 @@ function MenuOptions(props) {
         {user && (
           <>
             <NavDropdown title={titleProfile} id="basic-nav-dropdown">
-              <NavDropdown.Item href="/orders">
-                <a className="links">Mis pedidos</a>
+              <NavDropdown.Item className="links" to="/orders">
+                Mis pedidos
               </NavDropdown.Item>
-              <NavDropdown.Item href="/wishlist">
-                <a className="links">Mis favoritos</a>
+              <NavDropdown.Item className="links" href="/wishlist">
+                Mis favoritos
               </NavDropdown.Item>
-              <NavDropdown.Item href="/account">
-                <a className="links">Mi Perfil</a>
+              <NavDropdown.Item className="links" href="/account">
+                Mi Perfil
               </NavDropdown.Item>
-              <NavDropdown.Item href="/cart">
-                <a className="links">Carrito</a>
+              <NavDropdown.Item className="links" href="/cart">
+                Carrito
               </NavDropdown.Item>
               <NavDropdown.Item>
                 <button className="links" onClick={logout}>

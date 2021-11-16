@@ -11,6 +11,7 @@ const {
   crearUsuario,
   actualizarUsuario,
   borrarUsuario,
+  actualizarPassword,
 } = require("../controllers/usuarios");
 const { validarJWT } = require("../middlewares/validar-jwt");
 
@@ -39,17 +40,8 @@ router.get(
   getUserByID
 );
 
-router.put(
-  "/:id",
-  [
-    validarJWT,
-    check("name", "El nombre es obligatorio").not().isEmpty(),
-    check("email", "El email es obligatorio").isEmail(),
-    check("role", "El role es obligatorio").not().isEmpty(),
-    validarCampos,
-  ],
-  actualizarUsuario
-);
+router.put("/:id", [validarJWT], actualizarUsuario);
+router.put("/updp/:id", [validarJWT], actualizarPassword);
 
 router.delete("/:id", validarJWT, borrarUsuario);
 

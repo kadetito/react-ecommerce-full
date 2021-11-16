@@ -33,5 +33,4 @@ ModalCustom.propTypes = {
   show: PropTypes.bool.isRequired,
   setShow: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  children: PropTypes.object,
 };

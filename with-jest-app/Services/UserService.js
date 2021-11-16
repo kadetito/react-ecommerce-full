@@ -71,3 +71,61 @@ export async function getMeAPI(logout) {
     return null;
   }
 }
+
+export async function updateUserAPI(idUser, data, logout) {
+  try {
+    const toke = getToken();
+    const url = `${BASE_PATH}/api/usuarios/${idUser}`;
+    const params = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "x-token": toke,
+      },
+      body: JSON.stringify(data),
+    };
+    const result = await authFetch(url, params, logout);
+    return result ? result : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function updateEmailAPI(idUser, data, logout) {
+  try {
+    const toke = getToken();
+    const url = `${BASE_PATH}/api/usuarios/${idUser}`;
+    const params = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "x-token": toke,
+      },
+      body: JSON.stringify(data),
+    };
+    const result = await authFetch(url, params, logout);
+    return result ? result : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function updatePasswordAPI(idUser, password, logout) {
+  try {
+    const toke = getToken();
+    const url = `${BASE_PATH}/api/usuarios/updp/${idUser}`;
+    const params = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "x-token": toke,
+      },
+      body: JSON.stringify({ password: password }),
+    };
+    console.log(params);
+    const result = await authFetch(url, params, logout);
+    return result ? result : null;
+  } catch (error) {
+    return null;
+  }
+}
