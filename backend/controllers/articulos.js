@@ -1,16 +1,106 @@
 const { response } = require("express");
 
 const Articulo = require("../models/articulo");
+const Categoria = require("../models/categoria");
 
 const getArticulos = async (req, res = response) => {
-  const articulos = await Articulo.find()
-    .populate("usuario", "nombre img")
-    .populate("categoria", "nombre img");
+  const { page, limit, sort } = req.query;
+  let mysort = { sort: -1 };
+  console.log(page, limit, sort);
+  try {
+    const articulos = await Articulo.find()
+      .sort(mysort)
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
 
-  res.json({
-    ok: true,
-    articulos,
-  });
+    const count = await Articulo.countDocuments();
+
+    res.json({
+      ok: true,
+      articulos,
+      count: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: "Hable con el administrador",
+    });
+  }
+};
+
+const countArticulos = async (req, res = response) => {
+  const url = req.params.url;
+
+  try {
+    const categoriaDB = await Categoria.find({ url });
+    const count = await Articulo.countDocuments();
+    res.json({
+      ok: true,
+      total: Math.ceil(count),
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: "Hable con el administrador",
+    });
+  }
+};
+
+const getArticulosById = async (req, res = response) => {
+  const url = req.params.url;
+
+  const { page, limit, sort } = req.query;
+  let mysort = { sort: -1 };
+
+  try {
+    const categoriaDB = await Categoria.find({ url });
+
+    const articulos = await Articulo.find({ categoria: categoriaDB })
+      .sort(mysort)
+      .limit(limit * 1)
+      .skip((page - 0) * limit)
+      .exec();
+
+    const count = await Articulo.countDocuments();
+
+    res.json({
+      ok: true,
+      articulos,
+      count: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: "Hable con el administrador",
+    });
+  }
+};
+
+const getArticuloById = async (req, res = response) => {
+  const url = req.params.url;
+
+  try {
+    const articulo = await Articulo.find({ url });
+
+    res.json({
+      ok: true,
+      articulo,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: "Hable con el administrador",
+    });
+  }
 };
 
 const crearArticulo = async (req, res = response) => {
@@ -81,7 +171,6 @@ const borrarArticulo = async (req, res = response) => {
 
   try {
     const articulo = await Articulo.findById(id);
-
     if (!articulo) {
       return res.status(404).json({
         ok: true,
@@ -107,7 +196,10 @@ const borrarArticulo = async (req, res = response) => {
 
 module.exports = {
   getArticulos,
+  getArticulosById,
   crearArticulo,
   actualizarArticulo,
   borrarArticulo,
+  countArticulos,
+  getArticuloById,
 };

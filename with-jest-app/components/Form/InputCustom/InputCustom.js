@@ -30,7 +30,7 @@ export default function InputCustom(props) {
 }
 InputCustom.propTypes = {
   labelText: PropTypes.string,
-
+  value: PropTypes.any,
   onChange: PropTypes.func,
   name: PropTypes.string,
   id: PropTypes.string,

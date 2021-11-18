@@ -5,19 +5,19 @@ import { Form, Row, Col } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import useAuth from "hooks/useAuth";
-import { newAddressAPI } from "Services/AddressService";
+import { newAddressAPI, updateAddressesAPI } from "Services/AddressService";
 import Swal from "sweetalert2";
 
 export default function AddressForm(props) {
-  const { setShowModal, setReloadAddresses } = props;
+  const { setShowModal, setReloadAddresses, newAddress, address } = props;
   const [loading, setLoading] = useState(false);
   const { auth, logout } = useAuth();
 
   const formik = useFormik({
-    initialValues: initialValues(),
+    initialValues: initialValues(address),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: (formData) => {
-      createAddress(formData);
+      newAddress ? createAddress(formData) : updateAddress(formData);
     },
   });
 
@@ -28,6 +28,39 @@ export default function AddressForm(props) {
       //setReloadUser(true);
       Swal.fire({
         text: "Dirección añadida",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      formik.resetForm();
+      setReloadAddresses(true);
+      setShowModal(false);
+    } else {
+      Swal.fire({
+        text: response.msg,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+    setLoading(false);
+  };
+
+  const updateAddress = async (formData) => {
+    setLoading(true);
+    const formDataTemp = {
+      ...formData,
+      user: auth.idUser,
+    };
+    const response = await updateAddressesAPI(
+      address._id,
+      formDataTemp,
+      logout
+    );
+
+    if (response?.ok) {
+      //setReloadUser(true);
+      Swal.fire({
+        text: "Dirección Modificada",
         icon: "success",
         showConfirmButton: false,
         timer: 2000,
@@ -144,7 +177,7 @@ export default function AddressForm(props) {
           <BotonPositivo
             type="submit"
             loading={loading}
-            textButton="Guardar dirección"
+            textButton={newAddress ? "Crear dirección" : "Modificar dirección"}
           />
         </Col>
       </Row>
@@ -152,15 +185,15 @@ export default function AddressForm(props) {
   );
 }
 
-function initialValues() {
+function initialValues(address) {
   return {
-    title: "",
-    name: "",
-    address: "",
-    city: "",
-    state: "",
-    postalcode: "",
-    phone: "",
+    title: address?.title || null,
+    name: address?.name || null,
+    address: address?.address || null,
+    city: address?.city || null,
+    state: address?.state || null,
+    postalcode: address?.postalcode || null,
+    phone: address?.phone || null,
   };
 }
 

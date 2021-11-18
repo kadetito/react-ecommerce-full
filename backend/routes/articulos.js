@@ -10,15 +10,20 @@ const { validarJWT } = require("../middlewares/validar-jwt");
 
 const {
   getArticulos,
+  getArticulosById,
   crearArticulo,
   actualizarArticulo,
   borrarArticulo,
+  countArticulos,
+  getArticuloById,
 } = require("../controllers/articulos");
 
 const router = Router();
 
 router.get("/", getArticulos);
-
+router.get("/:url", getArticulosById);
+router.get("/detail/:url", getArticuloById);
+router.get("/count/articles/:url", countArticulos);
 router.post(
   "/",
   [

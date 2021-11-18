@@ -5,13 +5,7 @@ const ArticuloSchema = Schema({
     type: Array,
     items: [
       {
-        type: Object,
-        properties: {
-          $oid: {
-            type: String,
-          },
-        },
-        required: false,
+        type: String,
       },
     ],
   },
@@ -26,7 +20,7 @@ const ArticuloSchema = Schema({
     type: Number,
   },
   poster: {
-    type: Number,
+    type: String,
   },
   discount: {
     type: Number,

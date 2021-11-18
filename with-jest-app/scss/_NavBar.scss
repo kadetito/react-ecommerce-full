@@ -6,8 +6,28 @@ $dropDown: true;
 
 .navbar__global {
 }
+.dropdown-header {
+  color: #ffffff;
+}
+.dropdown-menu {
+  min-width: 950px !important;
+  margin-left: -80px !important;
+  background-color: #750e5b !important;
+  @media (max-width: 900px) {
+    min-width: 10rem !important;
+  }
+}
+
+.dropdown-menu > .dropdown-item {
+  display: inline !important;
+  @media (max-width: 900px) {
+    display: block !important;
+  }
+}
+
 .navbar {
   background-color: $bgDefault;
+
   .navbar-brand {
     color: $colDefault;
     &:hover,

@@ -4,11 +4,22 @@ const Addresses = require("../models/address");
 
 const getDirecciones = async (req, res = response) => {
   const usuario = req.params.usuario;
+  const { page = 1, limit = 10 } = req.query;
+
   try {
-    const direcciones = await Addresses.find({ usuario });
+    const direcciones = await Addresses.find({ usuario })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const count = await Addresses.countDocuments();
+
     res.json({
       ok: true,
       direcciones,
+
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
     });
   } catch (error) {
     console.log(error);
@@ -45,9 +56,9 @@ const actualizarDireccion = async (req, res = response) => {
   const uid = req.uid;
 
   try {
-    const articulo = await Addresses.findById(id);
+    const address = await Addresses.findById(id);
 
-    if (!articulo) {
+    if (!address) {
       return res.status(404).json({
         ok: true,
         msg: "Addresses no encontrado por id",
@@ -59,7 +70,7 @@ const actualizarDireccion = async (req, res = response) => {
       usuario: uid,
     };
 
-    const articuloActualizado = await Addresses.findByIdAndUpdate(
+    const addressActualizado = await Addresses.findByIdAndUpdate(
       id,
       cambiosArticulo,
       { new: true }
@@ -67,7 +78,7 @@ const actualizarDireccion = async (req, res = response) => {
 
     res.json({
       ok: true,
-      articulo: articuloActualizado,
+      address: addressActualizado,
     });
   } catch (error) {
     console.log(error);
@@ -83,9 +94,9 @@ const borrarDireccion = async (req, res = response) => {
   const id = req.params.id;
 
   try {
-    const articulo = await Addresses.findById(id);
+    const address = await Addresses.findById(id);
 
-    if (!articulo) {
+    if (!address) {
       return res.status(404).json({
         ok: true,
         msg: "Addresses no encontrado por id",

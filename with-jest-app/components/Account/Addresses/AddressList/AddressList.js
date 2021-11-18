@@ -1,13 +1,14 @@
 import useAuth from "hooks/useAuth";
 import React, { useEffect, useState } from "react";
-import { getAddressesAPI } from "Services/AddressService";
+import { getAddressesAPI, deleteAddressesAPI } from "Services/AddressService";
 import { map, size } from "lodash";
 import BotonPositivo from "@/components/Form/ButtonCustom/BotonPositivo";
 import BotonNegativo from "@/components/Form/ButtonCustom/BotonNegativo";
 import LoaderSpinner from "@/components/LoaderSpinner";
+import Swal from "sweetalert2";
 
 export default function AddressList(props) {
-  const { reloadAddresses, setReloadAddresses } = props;
+  const { reloadAddresses, setReloadAddresses, openModal } = props;
   const [addresses, setAddresses] = useState(null);
   const { auth, logout } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -31,7 +32,13 @@ export default function AddressList(props) {
             <>
               {map(addresses.direcciones, (address) => (
                 <div key={address._id} className="col-12 col-sm-6 col-xl-4">
-                  <Address address={address} loading={loading} />
+                  <Address
+                    address={address}
+                    loading={loading}
+                    logout={logout}
+                    setReloadAddresses={setReloadAddresses}
+                    openModal={openModal}
+                  />
                 </div>
               ))}
             </>
@@ -43,8 +50,28 @@ export default function AddressList(props) {
 }
 
 function Address(props) {
-  const { address, loading } = props;
-
+  const [loadingDelete, setLoadingDelete] = useState(false);
+  const { address, logout, setReloadAddresses, openModal } = props;
+  const deleteAddress = () => {
+    setLoadingDelete(true);
+    Swal.fire({
+      title: `Desea borrar ${address.title}?`,
+      text: "No podrá recuperarla, deberá crearla de nuevo",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, borrarla",
+      cancelButtonText: "No, cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const response = deleteAddressesAPI(address._id, logout);
+        if (response) setReloadAddresses(true);
+        Swal.fire("Borrada!", "La dirección ha sido eliminada", "success");
+      }
+    });
+    setLoadingDelete(false);
+  };
   return (
     <div className="card text-left">
       <div className="card-body">
@@ -64,14 +91,15 @@ function Address(props) {
             <BotonNegativo
               type="button"
               textButton="Borrar"
-              loading={loading}
+              loading={loadingDelete}
+              onClick={deleteAddress}
             />
           </div>
           <div>
             <BotonPositivo
+              onClick={() => openModal(`Editar ${address.title}`, address)}
               type="button"
               textButton="Modificar"
-              loading={loading}
             />
           </div>
         </div>

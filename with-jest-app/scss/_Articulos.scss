@@ -1,0 +1,111 @@
+.articulo__global {
+}
+.articulos__global {
+  .height_articulo-noresults {
+    height: 400px;
+  }
+  .titular-general {
+    border-bottom: 2px solid #c00952;
+    margin-bottom: 40px;
+    margin-left: 15px;
+    padding-left: 0px;
+    margin-right: 15px;
+  }
+
+  a.linkcard {
+    text-decoration: none;
+    color: #000;
+  }
+  a:hover.linkcard {
+    text-decoration: none;
+  }
+
+  .card {
+    margin-bottom: 22px;
+  }
+  .card:hover {
+    background-color: #fff9e1;
+  }
+  .card-body {
+    h4 {
+      font-size: 16px;
+    }
+
+    .price {
+      color: red;
+    }
+    .discount {
+      color: blue;
+    }
+    .tachado {
+      text-decoration: line-through;
+    }
+  }
+  .cover-img {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+
+    .card-imagen {
+      width: 70%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      margin: 50px;
+    }
+  }
+
+  $lineheight: 20px;
+  $height: $lineheight * 2;
+  $ellipsiswidth: 3em !default;
+
+  .overallContainer {
+    width: 100%;
+    min-height: 60px;
+    span {
+      display: block;
+      padding: 0px;
+
+      &:after {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .ellipsis {
+    overflow: hidden;
+    height: $height;
+    line-height: $lineheight;
+  }
+
+  .ellipsis:before {
+    content: "";
+    float: left;
+    width: 5px;
+    height: $height;
+  }
+
+  .ellipsis > *:first-child {
+    float: right;
+    width: 100%;
+    margin-left: -5px;
+  }
+
+  .ellipsis:after {
+    content: "...";
+    text-overflow: ellipsis;
+
+    float: right;
+    position: relative;
+    top: -$lineheight;
+    left: 100%;
+    width: 50px;
+    margin-left: -$ellipsiswidth;
+
+    text-align: right;
+    background: white;
+    background: linear-gradient(to right, rgba(0, 0, 0, 1), white 50%, white);
+  }
+}
