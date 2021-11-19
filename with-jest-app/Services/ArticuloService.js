@@ -47,3 +47,15 @@ export async function getTotalArticlesByCatAPI(categoria) {
     return null;
   }
 }
+
+export async function getArticulobyURLandIDAPI(path) {
+  try {
+    const url = `${BASE_PATH}/api/articulos/detail/${path}`;
+    const response = await fetch(url);
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    return null;
+  }
+}

@@ -88,7 +88,7 @@ const getArticuloById = async (req, res = response) => {
   const url = req.params.url;
 
   try {
-    const articulo = await Articulo.find({ url });
+    const articulo = await Articulo.findOne({ url });
 
     res.json({
       ok: true,

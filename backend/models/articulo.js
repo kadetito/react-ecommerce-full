@@ -28,7 +28,9 @@ const ArticuloSchema = Schema({
   summary: {
     type: String,
   },
-
+  referencia: {
+    type: String,
+  },
   published_at: {
     type: Date,
     required: true,
