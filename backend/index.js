@@ -25,7 +25,7 @@ app.use("/api/usuarios", require("./routes/usuarios"));
 app.use("/api/categorias", require("./routes/categorias"));
 app.use("/api/articulos", require("./routes/articulos"));
 app.use("/api/addresses", require("./routes/addresses"));
-
+app.use("/api/favoritos", require("./routes/favoritos"));
 // app.use("/api/todo", require("./routes/busquedas"));
 app.use("/api/login", require("./routes/auth"));
 // app.use("/api/upload", require("./routes/uploads"));

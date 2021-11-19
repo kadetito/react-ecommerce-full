@@ -1,4 +1,21 @@
 .articulo__global {
+  img {
+    width: 250px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  .price {
+    color: red;
+  }
+  .discount {
+    color: blue;
+  }
+  .tachado {
+    text-decoration: line-through;
+  }
 }
 .articulos__global {
   .height_articulo-noresults {
